@@ -65,6 +65,26 @@ public class DiamondSquare : MonoBehaviour
         mVerts[mVerts.Length-mDivisions].y=Random.Range(-mHeight, mHeight);
 
         int iterations = (int)Mathf.Log(mDivisions, 2);
+        int numSquares = 1;
+        int squareSize = mDivisions;
+
+        for(int i = 0; i < iterations; i++)
+        {
+            int row = 0;
+            for(int j=0; j < numSquares; j++)
+            {
+                int col = 0;
+                for(int k=0; k < numSquares; k++)
+                {
+                    DiamontSquare(row, col, squareSize, mHeight);
+                    col += squareSize;
+                }
+                row += squareSize;
+            }
+            numSquares *= 2;
+            squareSize /= 2;
+            mHeight *= 0.5f;
+        }
 
         mesh.vertices = mVerts;
         mesh.uv = uvs;
@@ -73,5 +93,21 @@ public class DiamondSquare : MonoBehaviour
 
         mesh.RecalculateBounds();  
         mesh.RecalculateNormals();
+    }
+
+    void DiamontSquare(int row, int col, int size, float offset)
+    {
+        int halfSize = (int)(size * 0.5);
+        int topLeft = row * (mDivisions + 1) + col;
+        int botLeft = (row + size) * (mDivisions + 1) + col;
+
+        int mid = (int)(row + halfSize) * (mDivisions + 1) + (int)(col + halfSize);
+        mVerts[mid].y = (mVerts[topLeft].y + mVerts[topLeft + size].y + mVerts[botLeft].y + mVerts[botLeft + size].y)*0.25f+Random.Range(-offset,offset);
+
+        mVerts[topLeft + halfSize].y = (mVerts[topLeft].y + mVerts[topLeft + size].y + mVerts[mid].y)/3+Random.Range(-offset,offset);
+        mVerts[mid - halfSize].y = (mVerts[topLeft].y + mVerts[botLeft].y + mVerts[mid].y)/3 +Random.Range(-offset,offset);
+        mVerts[mid + halfSize].y = (mVerts[topLeft + size].y + mVerts[botLeft + size].y + mVerts[mid].y)/3 +Random.Range(-offset,offset);
+        mVerts[botLeft + halfSize].y = (mVerts[botLeft].y + mVerts[botLeft + size].y + mVerts[mid].y)/3 +  Random.Range(+offset, offset);
+
     }
 }
