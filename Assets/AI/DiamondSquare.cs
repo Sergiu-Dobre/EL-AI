@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class DiamondSquare : MonoBehaviour
 {
     public int mDivisions; //number of divisions 
     public float mSize;
     public float mHeight;
+    
 
     Vector3[] mVerts;
     int mVertCont;
@@ -14,12 +16,14 @@ public class DiamondSquare : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      
     CreateTerrain();
     }
 
     
-    void CreateTerrain()
+   public void CreateTerrain()
     {
+        
      mVertCont= (mDivisions+1)*(mDivisions+1);
      mVerts= new Vector3[mVertCont];
         Vector2[] uvs = new Vector2[mVertCont];
@@ -83,7 +87,7 @@ public class DiamondSquare : MonoBehaviour
             }
             numSquares *= 2;
             squareSize /= 2;
-            mHeight *= 0.5f;
+            mHeight *= 1;
         }
 
         mesh.vertices = mVerts;
@@ -93,6 +97,11 @@ public class DiamondSquare : MonoBehaviour
 
         mesh.RecalculateBounds();  
         mesh.RecalculateNormals();
+
+       
+
+
+
     }
 
     void DiamontSquare(int row, int col, int size, float offset)
@@ -110,4 +119,5 @@ public class DiamondSquare : MonoBehaviour
         mVerts[botLeft + halfSize].y = (mVerts[botLeft].y + mVerts[botLeft + size].y + mVerts[mid].y)/3 +  Random.Range(+offset, offset);
 
     }
+   
 }
