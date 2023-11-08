@@ -7,10 +7,15 @@ public class Movement : MonoBehaviour
 {
   
     public CharacterController controlls;
-
     public float speed = 12f;
     public float gravity = 0;
     Vector3 velocity;
+    public GameObject mesh;
+
+    private void Start()
+    {
+        mesh = GetComponent<GameObject>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -26,5 +31,13 @@ public class Movement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controlls.Move(velocity * Time.deltaTime);
+
+        if (Input.GetKey("space"))
+        {
+            Debug.Log("created");
+
+           
+           
+        }
     }
 }

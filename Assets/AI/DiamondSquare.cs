@@ -119,5 +119,14 @@ public class DiamondSquare : MonoBehaviour
         mVerts[botLeft + halfSize].y = (mVerts[botLeft].y + mVerts[botLeft + size].y + mVerts[mid].y)/3 +  Random.Range(+offset, offset);
 
     }
-   
+    private void Update()
+    {
+        if (Input.GetKeyUp("space"))
+        {
+            Debug.Log("created");
+
+
+            CreateTerrain();
+        }
+    }
 }
